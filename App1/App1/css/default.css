@@ -1,0 +1,69 @@
+﻿body {
+}
+
+@media screen and (-ms-view-state: fullscreen-landscape) {
+    #main {
+        width: 100%;
+        height: 100%;
+        display: -ms-grid;
+        -ms-grid-columns: 1fr;
+        -ms-grid-rows: 132px 1fr;
+    }
+
+    #banner {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 1;
+        display: -ms-grid;
+        -ms-grid-columns: 120px 1fr;
+        -ms-grid-rows: 1fr;
+    }
+
+    #backbutton {
+        margin-top: 54px;
+        margin-left: 40px;
+    }
+
+    #maintitle {
+        -ms-grid-column: 2;
+        -ms-grid-row-align: center;
+    }
+
+    #content {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 2;
+    }
+
+    #articlelist {
+        width: 100%;
+        height: 100%;
+    }
+
+        #articlelist .win-item {
+            width: 250px;
+            height: 250px;
+        }
+
+        .listItemTemplate {
+        	margin: 8px;
+        }
+
+        .listItemImage {
+        	width: 234px;
+        	height: 165px;
+        }
+
+        .win-surface {
+        	margin-left: 112px;
+        }
+}
+
+@media screen and (-ms-view-state: filled) {
+}
+
+@media screen and (-ms-view-state: snapped) {
+}
+
+@media screen and (-ms-view-state: fullscreen-portrait) {
+}
