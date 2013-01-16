@@ -7,3 +7,16 @@ c:\users\mirco kocher\documents\visual studio 2012\Projects\App1\App1\bld\Debug\
 c:\users\mirco kocher\documents\visual studio 2012\Projects\App1\App1\bld\Debug\pri.resfiles
 c:\users\mirco kocher\documents\visual studio 2012\Projects\App1\App1\bld\Debug\LanguageQualifiers.txt
 c:\users\mirco kocher\documents\visual studio 2012\Projects\App1\App1\bld\Debug\ProjectArchitectures.txt
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bin\Debug\resources.pri
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bin\Debug\AppxManifest.xml
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bin\Debug\App1.build.appxrecipe
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\priconfig.xml
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\layout.resfiles
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\resources.resfiles
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\pri.resfiles
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\LanguageQualifiers.txt
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\ProjectArchitectures.txt
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\priconfig.xml.intermediate
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\layout.resfiles.intermediate
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\resources.resfiles.intermediate
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\bld\Debug\pri.resfiles.intermediate

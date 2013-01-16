@@ -40,18 +40,18 @@
         height: 100%;
     }
 
-        #articlelist .win-item {
-            width: 250px;
-            height: 250px;
+        .win-item {
+            width: 150px;
+            height: 150px;
         }
 
         .listItemTemplate {
-        	margin: 8px;
+            font-size: 20px;
         }
-
+        
         .listItemImage {
-        	width: 234px;
-        	height: 165px;
+        	width: 150px;
+        	height: 50px;
         }
 
         .win-surface {

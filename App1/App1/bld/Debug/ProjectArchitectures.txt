@@ -1,1 +1,1 @@
-C:\Users\Mirco Kocher\documents\visual studio 2012\Projects\App1\App1\App1.jsproj;neutral
+C:\Users\Mirco\Documents\Visual Studio 2012\Projects\App1\App1\App1.jsproj;neutral
