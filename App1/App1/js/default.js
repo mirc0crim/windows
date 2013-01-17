@@ -28,13 +28,6 @@
             WinJS.Namespace.define("ScriptData", scriptMembers);
             args.setPromise(WinJS.UI.processAll().then(dl));
 
-            for (var i = 1; i < 7; i++) {
-                var article = {};
-                article.title = "Series " + i;
-                article.thumbnail = "/images/series.png";
-                articlesList.push(article);
-            }
-
             document.getElementById("articlelist").style.display = "";
             document.getElementById("script").style.display = "none";
 
@@ -57,6 +50,12 @@
 
     function dl() {
         WinJS.xhr({ url: "http://bigbangtrans.wordpress.com" }).then(function (rss) {
+            for (var i = 1; i < 7; i++) {
+                var article = {};
+                article.title = "Series " + i;
+                article.thumbnail = "/images/series.png";
+                articlesList.push(article);
+            }
             var items = rss.responseText;
             var begin = items.indexOf("http://bigbangtrans.wordpress.com/about");
             var end = items.indexOf("footer");
@@ -151,10 +150,34 @@
                 if (text[i].length > 1) {
                     var article = {};
                     article.title = text[i];
-                    article.thumbnail = "/images/logo.png";
+                    article.thumbnail = getImage(text[i]);
                     scriptList.push(article);
                 }
         });
+    };
+
+    function getImage(line) {
+        if (line.indexOf("Scene") < 2 && line.indexOf("Scene") >= 0)
+            return "/images/ppl/scene.jpg";
+        if (line.indexOf("Credit") < 2 && line.indexOf("Credit") >= 0)
+            return "/images/ppl/credit.jpg";
+        if (line.indexOf("Sheldon") < 2 && line.indexOf("Sheldon") >= 0)
+            return "/images/ppl/sheldon.jpg";
+        if (line.indexOf("Leonard") < 2 && line.indexOf("Leonard") >= 0)
+            return "/images/ppl/leonard.jpg";
+        if (line.indexOf("Howard") < 2 && line.indexOf("Howard") >= 0)
+            return "/images/ppl/howard.jpg";
+        if (line.indexOf("Raj") < 2 && line.indexOf("Raj") >= 0)
+            return "/images/ppl/raj.jpg";
+        if (line.indexOf("Penny") < 2 && line.indexOf("Penny") >= 0)
+            return "/images/ppl/penny.jpg";
+        if (line.indexOf("Bernadette") < 2 && line.indexOf("Bernadette") >= 0)
+            return "/images/ppl/bernadette.jpg";
+        if (line.indexOf("Amy") < 2 && line.indexOf("Amy") >= 0)
+            return "/images/ppl/amy.jpg";
+        if (line.indexOf("Alex") < 2 && line.indexOf("Alex") >= 0)
+            return "/images/ppl/alex.jpg";
+        return "/images/logo.png";
     };
 
     function backbuttonhandler(eventInfo) {
