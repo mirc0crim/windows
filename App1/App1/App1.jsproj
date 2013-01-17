@@ -54,11 +54,12 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="default.html" />
-    <Content Include="images\series.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\series.png" />
     <Content Include="images\smalllogo.png" />
     <Content Include="images\splashscreen.png" />
     <Content Include="images\storelogo.png" />
+    <Content Include="images\widelogo.png" />
     <Content Include="js\default.js" />
     <Content Include="css\default.css" />
     <None Include="App1_TemporaryKey.pfx" />

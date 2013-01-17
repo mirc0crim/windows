@@ -15,8 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" StartPage="default.html">
-      <VisualElements DisplayName="App1" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="App1" ForegroundText="light" BackgroundColor="#AA00FF">
-        <DefaultTile ShowName="allLogos" />
+      <VisualElements DisplayName="Big Bang Theory Transcript" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="App1" ForegroundText="light" BackgroundColor="#0000FF">
+        <DefaultTile ShowName="allLogos" WideLogo="images\widelogo.png" ShortName="Big Bang Script" />
         <SplashScreen Image="images\splashscreen.png" />
       </VisualElements>
     </Application>
