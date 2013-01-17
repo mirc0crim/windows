@@ -6,6 +6,7 @@
     var app = WinJS.Application;
     var activation = Windows.ApplicationModel.Activation;
     var articlesList;
+    var scriptList;
     var episodeNames;
     var episodeList;
     var episodesInSeason = new Array(17, 23, 23, 24, 24, 24);
@@ -20,13 +21,17 @@
                 // Restore application state here.
             }
             articlesList = new WinJS.Binding.List();
-            var publicMembers = { ItemList: articlesList };
-            WinJS.Namespace.define("C9Data", publicMembers);
+            var episodeMembers = { ItemList: articlesList };
+            WinJS.Namespace.define("EpisodeData", episodeMembers);
+            scriptList = new WinJS.Binding.List();
+            var scriptMembers = { ItemList: scriptList };
+            WinJS.Namespace.define("ScriptData", scriptMembers);
             args.setPromise(WinJS.UI.processAll().then(dl));
 
             for (var i = 1; i < 7; i++) {
                 var article = {};
                 article.title = "Series " + i;
+                article.thumbnail = "/images/series.png";
                 articlesList.push(article);
             }
 
@@ -111,10 +116,12 @@
             var article = {};
             if (episodeNames[i + 1 + ep1] == undefined) {
                 article.title = "Not Yet Available";
+                article.thumbnail = "/images/series.png";
                 articlesList.push(article);
                 break;
             } else {
                 article.title = episodeNames[i + 1 + ep1];
+                article.thumbnail = "/images/series.png";
                 articlesList.push(article);
             }
         }
@@ -130,7 +137,6 @@
         articlelist.style.display = "none";
         script.style.display = "";
         WinJS.UI.Animation.enterPage(script);
-        script.innerText = "Script Text";
         WinJS.xhr({ url: link }).then(function (rss) {
             var items = rss.responseText;
             var begin = items.indexOf(">Scene");
@@ -142,25 +148,30 @@
             var text = el.innerText.split("\n");
             var scriptArray = new Array();
             for (var i = 0; i < text.length; i++)
-                if (text[i].length > 1)
-                    scriptArray.push(text[i]);
-            script.innerText = scriptArray;
+                if (text[i].length > 1) {
+                    var article = {};
+                    article.title = text[i];
+                    article.thumbnail = "/images/logo.png";
+                    scriptList.push(article);
+                }
         });
     };
 
     function backbuttonhandler(eventInfo) {
         var name = articlesList.getAt(1).title;
         if (name.indexOf("Series") < 0 && script.style.display == "none") {
-            for (var i = 0; i < 30; i++)
-                articlesList.pop();
+            articlesList.splice(0, articlesList.length);
             for (var i = 1; i < 7; i++) {
                 var article = {};
                 article.title = "Series " + i;
+                article.thumbnail = "/images/series.png";
                 articlesList.push(article);
             }
             document.getElementById("backbutton").disabled = true;
         }
         if (articlelist.style.display == "none") {
+            console.log(scriptList.length);
+            scriptList.splice(0, scriptList.length);
             script.style.display = "none";
             articlelist.style.display = "";
             WinJS.UI.Animation.enterPage(articlelist);
