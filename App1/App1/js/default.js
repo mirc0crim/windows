@@ -1,6 +1,4 @@
-﻿// For an introduction to the Blank template, see the following documentation:
-// http://go.microsoft.com/fwlink/?LinkId=232509
-(function () {
+﻿(function () {
     "use strict";
 
     WinJS.Binding.optimizeBindingReferences = true;
@@ -32,8 +30,14 @@
                 articlesList.push(article);
             }
 
+            document.getElementById("articlelist").style.display = "";
+            document.getElementById("script").style.display = "none";
+
             var myLV = document.getElementById("articlelist").winControl;
+            var myBB = document.getElementById("backbutton");
             myLV.addEventListener("iteminvoked", clickHandler);
+            myBB.addEventListener("click", backbuttonhandler);
+            myBB.disabled = true;
         }
     };
 
@@ -89,14 +93,15 @@
 
     function clickHandler(eventInfo) {
         var i = eventInfo.detail.itemIndex + 1;
-        var name = articlesList.getAt(i-1).title;
+        var name = articlesList.getAt(i - 1).title;
         if (name.indexOf("Series") > -1)
             change(i);
         else
-            loadScript(articlesList.getAt(i-1).title);
+            loadScript(articlesList.getAt(i - 1).title);
     };
 
     function change(season) {
+        document.getElementById("backbutton").disabled = false;
         for (var i = 0; i < episodesInSeason.length; i++)
             articlesList.pop();
         var ep1 = 0;
@@ -118,17 +123,48 @@
     function loadScript(name) {
         var i = episodeNames.indexOf(name);
         if (i > -1)
-            script(episodeList[i]);
+            loadscript(episodeList[i]);
     };
 
-    function script(link) {
+    function loadscript(link) {
+        articlelist.style.display = "none";
+        script.style.display = "";
+        WinJS.UI.Animation.enterPage(script);
+        script.innerText = "Script Text";
         WinJS.xhr({ url: link }).then(function (rss) {
             var items = rss.responseText;
             var begin = items.indexOf(">Scene");
             items = items.substring(begin + 1);
             var end = items.indexOf("</div>");
             items = items.substring(0, end);
+            var el = document.createElement("div");
+            el.innerHTML = items;
+            var text = el.innerText.split("\n");
+            var scriptArray = new Array();
+            for (var i = 0; i < text.length; i++)
+                if (text[i].length > 1)
+                    scriptArray.push(text[i]);
+            script.innerText = scriptArray;
         });
+    };
+
+    function backbuttonhandler(eventInfo) {
+        var name = articlesList.getAt(1).title;
+        if (name.indexOf("Series") < 0 && script.style.display == "none") {
+            for (var i = 0; i < 30; i++)
+                articlesList.pop();
+            for (var i = 1; i < 7; i++) {
+                var article = {};
+                article.title = "Series " + i;
+                articlesList.push(article);
+            }
+            document.getElementById("backbutton").disabled = true;
+        }
+        if (articlelist.style.display == "none") {
+            script.style.display = "none";
+            articlelist.style.display = "";
+            WinJS.UI.Animation.enterPage(articlelist);
+        }
     };
 
     app.start();
