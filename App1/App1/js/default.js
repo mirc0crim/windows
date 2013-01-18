@@ -147,38 +147,74 @@
             var text = el.innerText.split("\n");
             var scriptArray = new Array();
             for (var i = 0; i < text.length; i++)
-                if (text[i].length > 1) {
-                    var article = {};
-                    article.title = text[i];
-                    article.thumbnail = getImage(text[i]);
+                if (text[i].length > 1 && text[i].indexOf("Like") != 0
+                    && text[i].indexOf("Teleplay") != 0 && text[i].indexOf("Written by") != 0) {
+                    var article = getView(text[i]);
                     scriptList.push(article);
                 }
         });
     };
 
-    function getImage(line) {
-        if (line.indexOf("Scene") < 2 && line.indexOf("Scene") >= 0)
-            return "/images/ppl/scene.jpg";
-        if (line.indexOf("Credit") < 2 && line.indexOf("Credit") >= 0)
-            return "/images/ppl/credit.jpg";
-        if (line.indexOf("Sheldon") < 2 && line.indexOf("Sheldon") >= 0)
-            return "/images/ppl/sheldon.jpg";
-        if (line.indexOf("Leonard") < 2 && line.indexOf("Leonard") >= 0)
-            return "/images/ppl/leonard.jpg";
-        if (line.indexOf("Howard") < 2 && line.indexOf("Howard") >= 0)
-            return "/images/ppl/howard.jpg";
-        if (line.indexOf("Raj") < 2 && line.indexOf("Raj") >= 0)
-            return "/images/ppl/raj.jpg";
-        if (line.indexOf("Penny") < 2 && line.indexOf("Penny") >= 0)
-            return "/images/ppl/penny.jpg";
-        if (line.indexOf("Bernadette") < 2 && line.indexOf("Bernadette") >= 0)
-            return "/images/ppl/bernadette.jpg";
-        if (line.indexOf("Amy") < 2 && line.indexOf("Amy") >= 0)
-            return "/images/ppl/amy.jpg";
-        if (line.indexOf("Alex") < 2 && line.indexOf("Alex") >= 0)
-            return "/images/ppl/alex.jpg";
-        return "/images/logo.png";
-    };
+    function getView(line) {
+        var article = {};
+        if (line.indexOf("Scene") == 0) {
+            article.title = line.replace("Scene","").replace(":","");
+            article.thumbnail = "/images/ppl/scene.jpg";
+        }
+        else if (line.indexOf("(") == 0 || line.indexOf("Later") == 0
+            || line.indexOf("Time shift") == 0 || line.indexOf("Quick cut to") == 0) {
+            article.title = line;
+            article.thumbnail = "/images/ppl/scene.jpg";
+        }
+        else if (line.indexOf("Credit") == 0) {
+            article.title = line;
+            article.thumbnail = "/images/ppl/credit.jpg";
+        }
+        else if (isThisPersonTalking(line, "Sheldon")) {
+            article.title = line.replace("Sheldon", "").replace(":", "");
+            article.thumbnail = "/images/ppl/sheldon.jpg";
+        }
+        else if (isThisPersonTalking(line, "Leonard")) {
+            article.title = line.replace("Leonard", "").replace(":", "");
+            article.thumbnail = "/images/ppl/leonard.jpg";
+        }
+        else if (isThisPersonTalking(line, "Howard")) {
+            article.title = line.replace("Howard", "").replace(":", "");
+            article.thumbnail = "/images/ppl/howard.jpg";
+        }
+        else if (isThisPersonTalking(line, "Raj")) {
+            article.title = line.replace("Raj", "").replace(":", "");
+            article.thumbnail = "/images/ppl/raj.jpg";
+        }
+        else if (isThisPersonTalking(line, "Penny")) {
+            article.title = line.replace("Penny", "").replace(":", "");
+            article.thumbnail = "/images/ppl/penny.jpg";
+        }
+        else if (isThisPersonTalking(line, "Bernadette")) {
+            article.title = line.replace("Bernadette", "").replace(":", "");
+            article.thumbnail = "/images/ppl/bernadette.jpg";
+        }
+        else if (isThisPersonTalking(line, "Amy")) {
+            article.title = line.replace("Amy", "").replace(":", "");
+            article.thumbnail = "/images/ppl/amy.jpg";
+        }
+        else if (isThisPersonTalking(line, "Alex")) {
+            article.title = line.replace("Alex", "").replace(":", "");
+            article.thumbnail = "/images/ppl/alex.jpg";
+        }
+        else {
+            console.log(line);
+            article.title = line;
+            article.thumbnail = "/images/logo.png";
+        }
+        return article;
+    }
+
+    function isThisPersonTalking(line, person) {
+        if (line.indexOf(person) == 0 && line.indexOf(person + " and") != 0 && line.indexOf(person + ",") != 0)
+            return true;
+        return false;
+    }
 
     function backbuttonhandler(eventInfo) {
         var name = articlesList.getAt(1).title;
@@ -193,7 +229,6 @@
             document.getElementById("backbutton").disabled = true;
         }
         if (articlelist.style.display == "none") {
-            console.log(scriptList.length);
             scriptList.splice(0, scriptList.length);
             script.style.display = "none";
             articlelist.style.display = "";
