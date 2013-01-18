@@ -60,11 +60,17 @@
     <Content Include="images\ppl\bernadette.jpg" />
     <Content Include="images\ppl\credit.jpg" />
     <Content Include="images\ppl\howard.jpg" />
+    <Content Include="images\ppl\kripke.jpg" />
+    <Content Include="images\ppl\kurt.jpg" />
     <Content Include="images\ppl\leonard.jpg" />
+    <Content Include="images\ppl\leslie.jpg" />
     <Content Include="images\ppl\penny.jpg" />
+    <Content Include="images\ppl\priya.jpg" />
     <Content Include="images\ppl\raj.jpg" />
     <Content Include="images\ppl\scene.jpg" />
     <Content Include="images\ppl\sheldon.jpg" />
+    <Content Include="images\ppl\stuart.jpg" />
+    <Content Include="images\ppl\wil.jpg" />
     <Content Include="images\series.png" />
     <Content Include="images\smalllogo.png" />
     <Content Include="images\splashscreen.png" />

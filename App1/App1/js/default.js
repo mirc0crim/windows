@@ -106,6 +106,8 @@
 
     function change(season) {
         document.getElementById("backbutton").disabled = false;
+        document.getElementById("maintitle").innerText = "Episodes in Season " + season;
+        WinJS.UI.Animation.enterPage(maintitle);
         for (var i = 0; i < episodesInSeason.length; i++)
             articlesList.pop();
         var ep1 = 0;
@@ -128,8 +130,11 @@
 
     function loadScript(name) {
         var i = episodeNames.indexOf(name);
-        if (i > -1)
+        if (i > -1) {
             loadscript(episodeList[i]);
+            document.getElementById("maintitle").innerText = name;
+            WinJS.UI.Animation.enterPage(maintitle);
+        }
     };
 
     function loadscript(link) {
@@ -147,8 +152,10 @@
             var text = el.innerText.split("\n");
             var scriptArray = new Array();
             for (var i = 0; i < text.length; i++)
-                if (text[i].length > 1 && text[i].indexOf("Like") != 0
+                if (text[i].length > 1 && text[i].indexOf("Like") != 0 && text[i].indexOf("Story") != 0
                     && text[i].indexOf("Teleplay") != 0 && text[i].indexOf("Written by") != 0) {
+                    if (text[i].indexOf(" ") == 0)
+                        text[i] = text[i].replace(" ","");
                     var article = getView(text[i]);
                     scriptList.push(article);
                 }
@@ -162,7 +169,7 @@
             article.thumbnail = "/images/ppl/scene.jpg";
         }
         else if (line.indexOf("(") == 0 || line.indexOf("Later") == 0
-            || line.indexOf("Time shift") == 0 || line.indexOf("Quick cut to") == 0) {
+            || line.indexOf("Time") == 0 || line.indexOf("Quick cut to") == 0) {
             article.title = line;
             article.thumbnail = "/images/ppl/scene.jpg";
         }
@@ -202,6 +209,30 @@
             article.title = line.replace("Alex", "").replace(":", "");
             article.thumbnail = "/images/ppl/alex.jpg";
         }
+        else if (isThisPersonTalking(line, "Stuart")) {
+            article.title = line.replace("Stuart", "").replace(":", "");
+            article.thumbnail = "/images/ppl/stuart.jpg";
+        }
+        else if (isThisPersonTalking(line, "Leslie") || isThisPersonTalking(line, "Lesley")) {
+            article.title = line.replace("Leslie", "").replace("Lesley","").replace(":", "");
+            article.thumbnail = "/images/ppl/leslie.jpg";
+        }
+        else if (isThisPersonTalking(line, "Wil")) {
+            article.title = line.replace("Wil", "").replace(":", "");
+            article.thumbnail = "/images/ppl/wil.jpg";
+        }
+        else if (isThisPersonTalking(line, "Kurt")) {
+            article.title = line.replace("Kurt", "").replace(":", "");
+            article.thumbnail = "/images/ppl/kurt.jpg";
+        }
+        else if (isThisPersonTalking(line, "Kripke")) {
+            article.title = line.replace("Kripke", "").replace(":", "");
+            article.thumbnail = "/images/ppl/kripke.jpg";
+        }
+        else if (isThisPersonTalking(line, "Priya")) {
+            article.title = line.replace("Priya", "").replace(":", "");
+            article.thumbnail = "/images/ppl/priya.jpg";
+        }
         else {
             console.log(line);
             article.title = line;
@@ -227,8 +258,15 @@
                 articlesList.push(article);
             }
             document.getElementById("backbutton").disabled = true;
+            document.getElementById("maintitle").innerText = "Big Bang Theory Transcript";
+            WinJS.UI.Animation.enterPage(maintitle);
         }
         if (articlelist.style.display == "none") {
+            var lastItem = articlesList.pop();
+            var scndlastItem = articlesList.pop();
+            articlesList.push(scndlastItem);
+            articlesList.push(lastItem);
+            document.getElementById("maintitle").innerText = "Episodes in Season " + scndlastItem.title.charAt(1);
             scriptList.splice(0, scriptList.length);
             script.style.display = "none";
             articlelist.style.display = "";
