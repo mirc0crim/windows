@@ -149,6 +149,9 @@
     };
 
     function loadscript(link) {
+        WinJS.UI.Animation.exitPage(searchTile).done(function () {
+            searchTile.style.display = "none";
+        });
         WinJS.UI.Animation.exitPage(articlelist).done(function () {
             articlelist.style.display = "none";
         });
@@ -191,6 +194,37 @@
                 WinJS.UI.Animation.enterPage(searchTitle);
             });
             document.getElementById("backbutton").disabled = false;
+        } else {
+            var inp = searchInput.value;
+            if (inp.length > 0) {
+                var results = new Array();
+                for (var i = 0; i < episodeNames.length; i++)
+                    if (episodeNames[i].indexOf(inp) != -1)
+                        results.push(episodeNames[i]);
+                if (results.length > 0) {
+                    articlesList.splice(0, articlesList.length);
+                    for (var i = 0; i < results.length; i++) {
+                        var article = {};
+                        article.title = results[i];
+                        article.thumbnail = "/images/series.png";
+                        articlesList.push(article);
+                    }
+                    articlelist.style.display = "";
+                    WinJS.UI.Animation.enterPage(articlelist);
+                    WinJS.UI.Animation.exitPage(searchImg).done(function () {
+                        searchImg.style.top = "0px";
+                        WinJS.UI.Animation.enterPage(searchImg);
+                    });
+                    WinJS.UI.Animation.exitPage(searchInput).done(function () {
+                        searchInput.style.display = "none";
+                    });
+                    WinJS.UI.Animation.exitPage(searchTitle).done(function () {
+                        searchTitle.style.top = "-145px";
+                        WinJS.UI.Animation.enterPage(searchTitle);
+                    });
+                    maintitle.innerText = "Search Results for " + inp;
+                }
+            }
         }
     }
 
@@ -280,7 +314,7 @@
     }
 
     function backbuttonhandler(eventInfo) {
-        var name = articlesList.getAt(1).title;
+        var name = articlesList.getAt(0).title;
         if (name.indexOf("Series") < 0 && script.style.display == "none") {
             articlesList.splice(0, articlesList.length);
             for (var i = 1; i < 7; i++) {
@@ -295,18 +329,27 @@
             searchTile.style.display = "";
             WinJS.UI.Animation.enterPage(searchTile);
         }
-        else if (articlelist.style.display == "none" && searchTile.style.display == "none") {
+        else if (articlelist.style.display == "none") {
             var lastItem = articlesList.pop();
             var scndlastItem = articlesList.pop();
-            articlesList.push(scndlastItem);
+            if (scndlastItem != undefined)
+                articlesList.push(scndlastItem);
             articlesList.push(lastItem);
-            document.getElementById("maintitle").innerText = "Episodes in Season " + scndlastItem.title.charAt(1);
+            if (scndlastItem != undefined) {
+                if (lastItem.title.charAt(1) == "o") {
+                    maintitle.innerText = "Episodes in Season " + scndlastItem.title.charAt(1);
+                } else if (episodeNames.indexOf(scndlastItem.title) == episodeNames.indexOf(lastItem.title) -1) {
+                    maintitle.innerText = "Episodes in Season " + lastItem.title.charAt(1);
+                } else {
+                    maintitle.innerText = "Search Results";
+                }
+            } else
+                maintitle.innerText = "Search Results";
             scriptList.splice(0, scriptList.length);
             script.style.display = "none";
             articlelist.style.display = "";
             WinJS.UI.Animation.enterPage(articlelist);
-        }
-        else {
+        } else {
             articlelist.style.display = "";
             WinJS.UI.Animation.enterPage(articlelist);
             WinJS.UI.Animation.exitPage(searchImg).done(function () {
