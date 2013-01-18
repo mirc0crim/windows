@@ -30,12 +30,20 @@
 
             document.getElementById("articlelist").style.display = "";
             document.getElementById("script").style.display = "none";
+            document.getElementById("searchTile").style.display = "";
 
             var myLV = document.getElementById("articlelist").winControl;
             var myBB = document.getElementById("backbutton");
             myLV.addEventListener("iteminvoked", clickHandler);
             myBB.addEventListener("click", backbuttonhandler);
             myBB.disabled = true;
+
+            var searchField = document.getElementById("searchImg");
+            searchField.addEventListener("click", searchHandler);
+            WinJS.UI.Animation.enterPage(searchTile);
+
+            var searchInp = document.getElementById("searchInput");
+            searchInput.style.display = "none";
         }
     };
 
@@ -107,6 +115,9 @@
     function change(season) {
         document.getElementById("backbutton").disabled = false;
         document.getElementById("maintitle").innerText = "Episodes in Season " + season;
+        WinJS.UI.Animation.exitPage(searchTile).done(function () {
+            searchTile.style.display = "none";
+        });
         WinJS.UI.Animation.enterPage(maintitle);
         for (var i = 0; i < episodesInSeason.length; i++)
             articlesList.pop();
@@ -138,7 +149,9 @@
     };
 
     function loadscript(link) {
-        articlelist.style.display = "none";
+        WinJS.UI.Animation.exitPage(articlelist).done(function () {
+            articlelist.style.display = "none";
+        });
         script.style.display = "";
         WinJS.UI.Animation.enterPage(script);
         WinJS.xhr({ url: link }).then(function (rss) {
@@ -161,6 +174,25 @@
                 }
         });
     };
+
+    function searchHandler(eventInfo) {
+        if (articlelist.style.display != "none") {
+            WinJS.UI.Animation.exitPage(articlelist).done(function () {
+                articlelist.style.display = "none";
+            });
+            WinJS.UI.Animation.exitPage(searchImg).done(function () {
+                searchImg.style.top = "210px";
+                WinJS.UI.Animation.enterPage(searchImg);
+                searchInput.style.display = "";
+                WinJS.UI.Animation.enterPage(searchInput);
+            });
+            WinJS.UI.Animation.exitPage(searchTitle).done(function () {
+                searchTitle.style.top = "55px";
+                WinJS.UI.Animation.enterPage(searchTitle);
+            });
+            document.getElementById("backbutton").disabled = false;
+        }
+    }
 
     function getView(line) {
         var article = {};
@@ -260,8 +292,10 @@
             document.getElementById("backbutton").disabled = true;
             document.getElementById("maintitle").innerText = "Big Bang Theory Transcript";
             WinJS.UI.Animation.enterPage(maintitle);
+            searchTile.style.display = "";
+            WinJS.UI.Animation.enterPage(searchTile);
         }
-        if (articlelist.style.display == "none") {
+        else if (articlelist.style.display == "none" && searchTile.style.display == "none") {
             var lastItem = articlesList.pop();
             var scndlastItem = articlesList.pop();
             articlesList.push(scndlastItem);
@@ -271,6 +305,22 @@
             script.style.display = "none";
             articlelist.style.display = "";
             WinJS.UI.Animation.enterPage(articlelist);
+        }
+        else {
+            articlelist.style.display = "";
+            WinJS.UI.Animation.enterPage(articlelist);
+            WinJS.UI.Animation.exitPage(searchImg).done(function () {
+                searchImg.style.top = "0px";
+                WinJS.UI.Animation.enterPage(searchImg);
+            });
+            WinJS.UI.Animation.exitPage(searchInput).done(function () {
+                searchInput.style.display = "none";
+            });
+            WinJS.UI.Animation.exitPage(searchTitle).done(function () {
+                searchTitle.style.top = "-145px";
+                WinJS.UI.Animation.enterPage(searchTitle);
+            });
+            document.getElementById("backbutton").disabled = true;
         }
     };
 

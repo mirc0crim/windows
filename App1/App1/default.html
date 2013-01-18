@@ -41,6 +41,11 @@
             <div id="articlelist" data-win-control="WinJS.UI.ListView" data-win-options="{ itemDataSource: EpisodeData.ItemList.dataSource, itemTemplate: EpisodeItemTemplate, iteminvoked: clickHandler}"></div>
             <div id="script" data-win-control="WinJS.UI.ListView" data-win-options="{ itemDataSource: ScriptData.ItemList.dataSource, itemTemplate: ScriptItemTemplate, layout: {type: WinJS.UI.ListLayout}}"></div>
         </section>
+        <section id="searchTile">
+                <img src="/images/search.png" id="searchImg" />
+                <div id="searchTitle">Search</div>
+                <input id="searchInput" type="text" />
+        </section>
     </div>
 </body>
 </html>
