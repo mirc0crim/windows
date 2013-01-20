@@ -43,7 +43,7 @@
 
             var searchInp = document.getElementById("searchInput");
             searchInp.addEventListener("click", searchInpHandler);
-            searchInp.addEventListener("submit", searchHandler);
+            searchInp.addEventListener("keydown", searchEnterHandler);
             searchInput.style.display = "none";
 
             searchTile.style.display = "none";
@@ -188,7 +188,7 @@
         });
     };
 
-    function searchHandler(eventInfo) {
+    function searchHandler() {
         if (state == "home") {
             WinJS.UI.Animation.exitPage(searchImg).done(function () {
                 searchImg.style.top = "210px";
@@ -235,6 +235,11 @@
             searchInput.value = "";
         }
     };
+
+    function searchEnterHandler(eventInfo) {
+        if (eventInfo.keyCode == 13)
+            searchHandler();
+    }
 
     function getView(line) {
         var article = {};
