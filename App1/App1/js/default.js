@@ -10,15 +10,14 @@
     var episodeNames;
     var episodeList;
     var episodesInSeason = new Array(17, 23, 23, 24, 24, 24);
+    var state = "home";
 
     app.onactivated = function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
             if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
-                // TODO: This application has been newly launched. Initialize
-                // your application here.
+                // TODO: This application has been newly launched.
             } else {
                 // TODO: This application has been reactivated from suspension.
-                // Restore application state here.
             }
             articlesList = new WinJS.Binding.List();
             var episodeMembers = { ItemList: articlesList };
@@ -43,7 +42,11 @@
             WinJS.UI.Animation.enterPage(searchTile);
 
             var searchInp = document.getElementById("searchInput");
+            searchInp.addEventListener("click", searchInpHandler);
+            searchInp.addEventListener("submit", searchHandler);
             searchInput.style.display = "none";
+
+            searchTile.style.display = "none";
         }
     };
 
@@ -64,6 +67,7 @@
                 article.thumbnail = "/images/series.png";
                 articlesList.push(article);
             }
+            searchTile.style.display = "";
             var items = rss.responseText;
             var begin = items.indexOf("http://bigbangtrans.wordpress.com/about");
             var end = items.indexOf("footer");
@@ -119,7 +123,8 @@
             searchTile.style.display = "none";
         });
         WinJS.UI.Animation.enterPage(maintitle);
-        for (var i = 0; i < episodesInSeason.length; i++)
+        var end = articlesList.length;
+        for (var i = 0; i < end; i++)
             articlesList.pop();
         var ep1 = 0;
         for (var i = 0; i < season - 1; i++)
@@ -137,18 +142,23 @@
                 articlesList.push(article);
             }
         }
+        state = "episodes";
     };
 
     function loadScript(name) {
         var i = episodeNames.indexOf(name);
         if (i > -1) {
-            loadscript(episodeList[i]);
+            loadScriptText(episodeList[i]);
             document.getElementById("maintitle").innerText = name;
             WinJS.UI.Animation.enterPage(maintitle);
+            if (state == "episodes")
+                state = "script";
+            else
+                state = "script2";
         }
     };
 
-    function loadscript(link) {
+    function loadScriptText(link) {
         WinJS.UI.Animation.exitPage(searchTile).done(function () {
             searchTile.style.display = "none";
         });
@@ -179,10 +189,7 @@
     };
 
     function searchHandler(eventInfo) {
-        if (articlelist.style.display != "none") {
-            WinJS.UI.Animation.exitPage(articlelist).done(function () {
-                articlelist.style.display = "none";
-            });
+        if (state == "home") {
             WinJS.UI.Animation.exitPage(searchImg).done(function () {
                 searchImg.style.top = "210px";
                 WinJS.UI.Animation.enterPage(searchImg);
@@ -194,6 +201,7 @@
                 WinJS.UI.Animation.enterPage(searchTitle);
             });
             document.getElementById("backbutton").disabled = false;
+            state = "searching";
         } else {
             var inp = searchInput.value;
             if (inp.length > 0) {
@@ -202,31 +210,31 @@
                     if (episodeNames[i].indexOf(inp) != -1)
                         results.push(episodeNames[i]);
                 if (results.length > 0) {
-                    articlesList.splice(0, articlesList.length);
+                    var end = articlesList.length
+                    for (var i = 0; i < end; i++)
+                        articlesList.pop();
                     for (var i = 0; i < results.length; i++) {
                         var article = {};
                         article.title = results[i];
                         article.thumbnail = "/images/series.png";
                         articlesList.push(article);
                     }
-                    articlelist.style.display = "";
-                    WinJS.UI.Animation.enterPage(articlelist);
-                    WinJS.UI.Animation.exitPage(searchImg).done(function () {
-                        searchImg.style.top = "0px";
-                        WinJS.UI.Animation.enterPage(searchImg);
-                    });
-                    WinJS.UI.Animation.exitPage(searchInput).done(function () {
-                        searchInput.style.display = "none";
-                    });
-                    WinJS.UI.Animation.exitPage(searchTitle).done(function () {
-                        searchTitle.style.top = "-145px";
-                        WinJS.UI.Animation.enterPage(searchTitle);
-                    });
+                    searchImg.style.top = "0px";
+                    searchInput.style.display = "none";
+                    searchTitle.style.top = "-145px";
+                    searchTile.style.display = "none";
                     maintitle.innerText = "Search Results for " + inp;
+                    state = "searched";
                 }
             }
         }
     }
+
+    function searchInpHandler() {
+        if (searchInput.value == "Enter Search Term") {
+            searchInput.value = "";
+        }
+    };
 
     function getView(line) {
         var article = {};
@@ -315,8 +323,10 @@
 
     function backbuttonhandler(eventInfo) {
         var name = articlesList.getAt(0).title;
-        if (name.indexOf("Series") < 0 && script.style.display == "none") {
-            articlesList.splice(0, articlesList.length);
+        if (state == "episodes") {
+            var end = articlesList.length
+            for (var i = 0; i < end; i++)
+                articlesList.pop();
             for (var i = 1; i < 7; i++) {
                 var article = {};
                 article.title = "Series " + i;
@@ -328,8 +338,8 @@
             WinJS.UI.Animation.enterPage(maintitle);
             searchTile.style.display = "";
             WinJS.UI.Animation.enterPage(searchTile);
-        }
-        else if (articlelist.style.display == "none") {
+            state = "home";
+        } else if (state == "script") {
             var lastItem = articlesList.pop();
             var scndlastItem = articlesList.pop();
             if (scndlastItem != undefined)
@@ -338,18 +348,45 @@
             if (scndlastItem != undefined) {
                 if (lastItem.title.charAt(1) == "o") {
                     maintitle.innerText = "Episodes in Season " + scndlastItem.title.charAt(1);
-                } else if (episodeNames.indexOf(scndlastItem.title) == episodeNames.indexOf(lastItem.title) -1) {
-                    maintitle.innerText = "Episodes in Season " + lastItem.title.charAt(1);
                 } else {
-                    maintitle.innerText = "Search Results";
+                    maintitle.innerText = "Episodes in Season " + lastItem.title.charAt(1);
                 }
-            } else
-                maintitle.innerText = "Search Results";
+            }
             scriptList.splice(0, scriptList.length);
             script.style.display = "none";
             articlelist.style.display = "";
             WinJS.UI.Animation.enterPage(articlelist);
-        } else {
+            backbutton.disabled = false;
+            state = "episodes";
+        } else if (state == "script2") {
+            maintitle.innerText = "Search Results";
+            scriptList.splice(0, scriptList.length);
+            script.style.display = "none";
+            articlelist.style.display = "";
+            WinJS.UI.Animation.enterPage(articlelist);
+            backbutton.disabled = false;
+            state = "episodes";
+        } else if (state == "searched") {
+            maintitle.innerText = "Big Bang Theory Transcript";
+            var end = articlesList.length
+            for (var i = 0; i < end; i++)
+                articlesList.pop();
+            for (var i = 1; i < 7; i++) {
+                var article = {};
+                article.title = "Series " + i;
+                article.thumbnail = "/images/series.png";
+                articlesList.push(article);
+            }
+            scriptList.splice(0, scriptList.length);
+            script.style.display = "none";
+            articlelist.style.display = "";
+            searchTile.style.display = "";
+            WinJS.UI.Animation.enterPage(searchTile);
+            backbutton.disabled = true;
+            state = "home";
+        } else if (state == "searching") {
+            maintitle.innerText = "Big Bang Theory Transcript";
+            searchTile.style.display = "";
             articlelist.style.display = "";
             WinJS.UI.Animation.enterPage(articlelist);
             WinJS.UI.Animation.exitPage(searchImg).done(function () {
@@ -363,7 +400,8 @@
                 searchTitle.style.top = "-145px";
                 WinJS.UI.Animation.enterPage(searchTitle);
             });
-            document.getElementById("backbutton").disabled = true;
+            backbutton.disabled = true;
+            state = "home";
         }
     };
 
