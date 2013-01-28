@@ -83,6 +83,7 @@
         height: 100%;
         -ms-grid-row: 2;
         text-align: right;
+        display: normal;
     }
 
 
@@ -117,10 +118,327 @@
 }
 
 @media screen and (-ms-view-state: filled) {
+
+    #main {
+        width: 100%;
+        height: 100%;
+        display: -ms-grid;
+        -ms-grid-columns: 1fr;
+        -ms-grid-rows: 130px 1fr;
+    }
+
+    #banner {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 1;
+        display: -ms-grid;
+        -ms-grid-columns: 100px 1fr;
+        -ms-grid-rows: 1fr;
+    }
+
+    #backbutton {
+        margin-top: 50px;
+        margin-left: 40px;
+    }
+
+    #maintitle {
+        -ms-grid-column: 2;
+        -ms-grid-row-align: center;
+    }
+
+    #content {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 2;
+    }
+
+    #articlelist {
+        width: 100%;
+        height: 100%;
+    }
+
+    .listItemTitle {
+        position: relative;
+        left: 0px;
+        top: -150px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        font-size: 20px;
+    }
+
+    .listItemTemplate {
+        height: 150px;
+        margin: 1px;
+    }
+
+    .win-surface {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+
+    #script {
+        width: 100%;
+        height: 100%;
+    }
+
+    .scriptlistItemTitle {
+        margin-left: 175px;
+        margin-right: 150px;
+        font-size: 20px;
+        position: relative;
+        left: 0px;
+        top: -150px;
+    }
+
+    .scriptlistItemTemplate {
+        height: 150px;
+    }
+
+    #searchTile {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 2;
+        text-align: right;
+        display: normal;
+    }
+
+
+    #searchTitle {
+        position: relative;
+        left: -335px;
+        top: -145px;
+        font-size: 20px;
+    }
+
+    #searchImg {
+        position: relative;
+        margin-top: 2px;
+        margin-right: 100px;
+        border-style: solid;
+        border-width: medium;
+        border-color: white;
+        padding: 1px;
+    }
+
+    #searchImg:hover {
+            border-color: gray;
+        }
+
+    #searchInput {
+        width: 300px;
+        position: relative;
+        left: -100px;
+        top: -25px;
+        font-size: 20px;
+    }
 }
 
 @media screen and (-ms-view-state: snapped) {
+
+    #main {
+        width: 100%;
+        height: 100%;
+        display: -ms-grid;
+        -ms-grid-columns: 1fr;
+        -ms-grid-rows: 100px 1fr;
+    }
+
+    #banner {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 1;
+        display: -ms-grid;
+        -ms-grid-columns: 50px 1fr;
+        -ms-grid-rows: 1fr;
+    }
+
+    #backbutton {
+        margin-top: 40px;
+        margin-left: 10px;
+    }
+
+    #maintitle {
+        -ms-grid-column: 2;
+        -ms-grid-row-align: center;
+    }
+
+    #content {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 2;
+    }
+
+    #articlelist {
+        width: 100%;
+        height: 100%;
+    }
+
+    .listItemTitle {
+        position: relative;
+        left: 0px;
+        top: -150px;
+        font-size: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        font-size: 20px;
+    }
+
+    .listItemTemplate {
+        height: 150px;
+        height: 150px;
+        margin: 1px;
+    }
+
+    .win-surface {
+        margin-left: 5px;
+    }
+
+    #script {
+        width: 100%;
+        height: 100%;
+    }
+
+    .scriptlistItemTitle {
+        margin-left: 55px;
+        margin-right: 5px;
+        font-size: 14px;
+        position: relative;
+        left: 0px;
+        top: -50px;
+    }
+
+    .scriptlistItemTemplate {
+        height: 100px;
+        margin: 1px;
+    }
+
+    #scriptImg {
+        height: 50px;
+        width: 50px;
+        max-width:100%;
+        max-height:100%;
+    }
+
+    #searchTile {
+        display: none;
+    }
 }
 
 @media screen and (-ms-view-state: fullscreen-portrait) {
+
+    #main {
+        width: 100%;
+        height: 100%;
+        display: -ms-grid;
+        -ms-grid-columns: 1fr;
+        -ms-grid-rows: 130px 1fr;
+    }
+
+    #banner {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 1;
+        display: -ms-grid;
+        -ms-grid-columns: 100px 1fr;
+        -ms-grid-rows: 1fr;
+    }
+
+    #backbutton {
+        margin-top: 50px;
+        margin-left: 40px;
+    }
+
+    #maintitle {
+        -ms-grid-column: 2;
+        -ms-grid-row-align: center;
+    }
+
+    #content {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 2;
+    }
+
+    #articlelist {
+        width: 100%;
+        height: 100%;
+    }
+
+    .listItemTitle {
+        position: relative;
+        left: 0px;
+        top: -150px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        font-size: 20px;
+    }
+
+    .listItemTemplate {
+        height: 150px;
+        margin: 1px;
+    }
+
+    .win-surface {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+
+    #script {
+        width: 100%;
+        height: 100%;
+    }
+
+    .scriptlistItemTitle {
+        margin-left: 175px;
+        margin-right: 150px;
+        font-size: 20px;
+        position: relative;
+        left: 0px;
+        top: -150px;
+    }
+
+    .scriptlistItemTemplate {
+        height: 150px;
+    }
+
+    #searchTile {
+        width: 100%;
+        height: 100%;
+        -ms-grid-row: 2;
+        text-align: right;
+        display: normal;
+    }
+
+
+    #searchTitle {
+        position: relative;
+        left: -335px;
+        top: -145px;
+        font-size: 20px;
+    }
+
+    #searchImg {
+        position: relative;
+        margin-top: 2px;
+        margin-right: 100px;
+        border-style: solid;
+        border-width: medium;
+        border-color: white;
+        padding: 1px;
+    }
+
+    #searchImg:hover {
+            border-color: gray;
+        }
+
+    #searchInput {
+        width: 300px;
+        position: relative;
+        left: -100px;
+        top: -25px;
+        font-size: 20px;
+    }
 }
