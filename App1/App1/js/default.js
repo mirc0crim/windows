@@ -63,7 +63,7 @@
         WinJS.xhr({ url: "http://bigbangtrans.wordpress.com" }).then(function (rss) {
             for (var i = 1; i < 7; i++) {
                 var article = {};
-                article.title = "Series " + i;
+                article.title = "Season " + i;
                 article.thumbnail = "/images/series.png";
                 articlesList.push(article);
             }
@@ -110,7 +110,7 @@
     function clickHandler(eventInfo) {
         var i = eventInfo.detail.itemIndex + 1;
         var name = articlesList.getAt(i - 1).title;
-        if (name.indexOf("Series") > -1)
+        if (name.indexOf("Season") > -1)
             change(i);
         else
             loadScript(articlesList.getAt(i - 1).title);
@@ -207,7 +207,7 @@
             if (inp.length > 0) {
                 var results = new Array();
                 for (var i = 0; i < episodeNames.length; i++)
-                    if (episodeNames[i].indexOf(inp) != -1)
+                    if (episodeNames[i].toLowerCase().indexOf(inp.toLowerCase()) != -1)
                         results.push(episodeNames[i]);
                 if (results.length > 0) {
                     var end = articlesList.length
@@ -223,7 +223,7 @@
                     searchInput.style.display = "none";
                     searchTitle.style.top = "-145px";
                     searchTile.style.display = "none";
-                    maintitle.innerText = "Search Results for " + inp;
+                    maintitle.innerText = "Search Results for \"" + inp + "\"";
                     state = "searched";
                 }
             }
@@ -334,7 +334,7 @@
                 articlesList.pop();
             for (var i = 1; i < 7; i++) {
                 var article = {};
-                article.title = "Series " + i;
+                article.title = "Season " + i;
                 article.thumbnail = "/images/series.png";
                 articlesList.push(article);
             }
@@ -378,7 +378,7 @@
                 articlesList.pop();
             for (var i = 1; i < 7; i++) {
                 var article = {};
-                article.title = "Series " + i;
+                article.title = "Season " + i;
                 article.thumbnail = "/images/series.png";
                 articlesList.push(article);
             }
